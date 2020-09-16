@@ -2,17 +2,24 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { findAllByText } from '@testing-library/react'
 
-const Statistics = (props) => (
-  <div>
-      <h2>statistics</h2>
-      <div>good {props.good}</div>
-      <div>neutral {props.neutral}</div>
-      <div>bad {props.bad}</div>
-      <div>all {props.allCount}</div>
-      <div>average {(props.good-props.bad)/props.allCount}</div>
-      <div>positive {props.good/props.allCount*100}%</div>
-  </div>
-)
+const Statistics = (props) => {
+  if(props.allCount===0)
+    return (
+      <div>No feedback given</div>
+    )
+  else
+    return (
+      <div>
+        <h2>statistics</h2>
+        <div>good {props.good}</div>
+        <div>neutral {props.neutral}</div>
+        <div>bad {props.bad}</div>
+        <div>all {props.allCount}</div>
+        <div>average {(props.good - props.bad) / props.allCount}</div>
+        <div>positive {props.good / props.allCount * 100}%</div>
+      </div>
+    )
+}
 
 const App = () => {
   // save clicks of each button to own state
