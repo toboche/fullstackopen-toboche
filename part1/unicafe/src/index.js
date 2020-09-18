@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-import { findAllByText } from '@testing-library/react'
+// import { findAllByText } from '@testing-library/react'
 
 const Statistic = (props) => (
-  <div>{props.text}</div>
+  <tr>
+    <td>{props.text}</td>
+    <td>{props.value}</td>
+  </tr>
 )
 
 const Button = (props) => (
@@ -19,12 +22,16 @@ const Statistics = (props) => {
     return (
       <div>
         <h2>statistics</h2>
-        <Statistic text={'good ' + props.good} />
-        <Statistic text={'neutral ' + props.neutral}/>
-        <Statistic text={'bad '+ props.bad}/>
-        <Statistic text={'all ' + props.allCount}/>
-        <Statistic text={'average ' + (props.good - props.bad) / props.allCount}/>
-        <Statistic text={'positive ' + props.good / props.allCount * 100 +'%'}/>
+        <table>
+          <tbody>
+            <Statistic text={'good'} value={props.good}/>
+            <Statistic text={'neutral'} value={props.neutral}/>
+            <Statistic text={'bad'} value={props.bad}/>
+            <Statistic text={'all'} value={props.allCount}/>
+            <Statistic text={'average'} value={(props.good - props.bad) / props.allCount}/>
+            <Statistic text={'positive'} value={props.good / props.allCount * 100 +'%'}/>
+          </tbody>
+        </table>
       </div>
     )
 }
