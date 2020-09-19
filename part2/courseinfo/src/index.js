@@ -53,11 +53,20 @@ const Part = (props) => (
   </p>
 )
 
-const Total = (props) => (
-  <p>Number of exercises {props.parts[0].exercises + 
-    props.parts[1].exercises + 
-    props.parts[2].exercises
-    }</p>
-)
+const Total = (props) => {
+  // console.log(props);
+  return (
+    <p>
+      <b>
+        total of {props.parts
+        .map(item => item.exercises)
+        .reduce((sum, item) => {
+          console.log(item.exercises)
+          return sum + item
+        })} exercises
+    </b>
+    </p>
+  )
+}
 
 ReactDOM.render(<App />, document.getElementById('root'))
