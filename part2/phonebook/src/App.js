@@ -7,11 +7,16 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const onNameSubmit = (event) => {
     event.preventDefault()
-    const newPersons = persons.concat(
-        { name: newName }
-    )
-    setPersons(newPersons)
-    setNewName('')
+    if(persons.map(item=> item.name).includes(newName)){
+      window.alert(`name ${newName} already exists`)
+      return
+    }else{
+      const newPersons = persons.concat(
+          { name: newName }
+      )
+      setPersons(newPersons)
+      setNewName('')
+    }
   }
 
   return (
