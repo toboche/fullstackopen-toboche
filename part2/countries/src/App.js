@@ -30,7 +30,7 @@ const App = () => {
         </div>
         { filteredCountryNames.length === 1 
         ? <CountryDetails country={filteredCountryNames[0]} />
-        :filteredCountryNames.map(item => <GeneralCountry key={item.name} name={item.name}/>)
+        :filteredCountryNames.map(item => <GeneralCountry key={item.name} name={item.name} onClick={(name) => setFilter(name)}/>)
     }
     </div>
 }
