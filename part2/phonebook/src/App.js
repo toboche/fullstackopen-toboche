@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import axios from 'axios'
+import personsService from './services/persons'
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
@@ -10,10 +11,10 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   useEffect(() =>{
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response =>{
-        setPersons(response.data)
+    personsService
+      .getAll()   
+      .then(persons =>{
+        setPersons(persons)
       })
 
   }, [])
@@ -24,17 +25,25 @@ const App = () => {
       window.alert(`name ${newName} already exists`)
       return
     }else{
-      const newPersons = persons.concat(
-          {
-            name: newName,
-            phone: newPhone
-          }
-      )
-      setPersons(newPersons)
-      setNewName('')
+      const newPerson = {
+        name: newName,
+        phone: newPhone
+      }
+      personsService.add(
+        newPerson
+      ).then( newPerson =>{
+            const newPersons = persons.concat(
+              newPerson
+            )
+          setPersons(newPersons)
+          setNewName('')
+      })
+    
     }
   }
 
+  console.log('got persons');
+  console.log(persons);
   const filteredPersons = persons
     .filter(person => person.name.includes(filter))
   return (
