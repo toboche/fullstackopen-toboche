@@ -6,7 +6,6 @@ const getAll = ()  => {
    return axios
       .get(url)
       .then(response => {
-          console.log('persons downloaded', response.data);
           return response.data
       })
     }
@@ -23,8 +22,8 @@ const deletePerson = person =>
 
 const update = person =>
     axios
-        .update(url+`/${person.id}`, person)
-        .then(response => response)
+        .put(url+`/${person.id}`, person)
+        .then(response => response.data)
 
 export default {getAll, add, deletePerson, update}
 

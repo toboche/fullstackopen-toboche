@@ -22,9 +22,14 @@ const App = () => {
   const onNameSubmit = (event) => {
     event.preventDefault()
     if(persons.map(item=> item.name).includes(newName)){
-      window.alert(`name ${newName} already exists`)
-      return
-    }else{
+      const confirmed = window.confirm(`${newName} already is already in the phonebook. update?`)
+      if(confirmed){
+        const person = persons.find(item => item.name === newName)
+        personsService
+          .update({...person, phone: newPhone})
+          .then(updatedPerson => setPersons(persons.map(item => item.id===person.id? updatedPerson: item)))
+      }
+    } else {
       const newPerson = {
         name: newName,
         phone: newPhone
@@ -38,12 +43,17 @@ const App = () => {
           setPersons(newPersons)
           setNewName('')
       })
-    
     }
   }
 
-  console.log('got persons');
-  console.log(persons);
+  const deletePerson = (person) => {
+    console.log('delete');
+    const del = window.confirm(`delete that guy?`)
+    if(del)
+      personsService.deletePerson(person)
+        .then(setPersons(persons.filter(p => p.id !== person.id)))
+  }
+
   const filteredPersons = persons
     .filter(person => person.name.includes(filter))
   return (
@@ -62,7 +72,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <Persons persons={filteredPersons} />
+      <Persons persons={filteredPersons} deletePerson={deletePerson} />
     </div>
   )
 }

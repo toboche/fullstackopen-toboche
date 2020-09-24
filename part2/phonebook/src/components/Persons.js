@@ -1,8 +1,8 @@
 import React from 'react'
 import Person from './Person'
 
-const Persons = ({persons}) => (
-    persons.map(person => <Person person={person}/>)
+const Persons = ({persons, deletePerson}) => (
+    persons.map(person => <Person person={person} deletePerson={deletePerson}/>)
 )
 
 export default Persons
