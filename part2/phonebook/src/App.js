@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
-import axios from 'axios'
 import personsService from './services/persons'
+import './index.css'
+import Notification from './components/Notification'
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [filter, setFilter] = useState('')
+  const [message, setMessage] = useState(null)
 
   useEffect(() =>{
     personsService
@@ -27,7 +29,13 @@ const App = () => {
         const person = persons.find(item => item.name === newName)
         personsService
           .update({...person, phone: newPhone})
-          .then(updatedPerson => setPersons(persons.map(item => item.id===person.id? updatedPerson: item)))
+          .then(updatedPerson => {
+            setMessage('Person updated')
+            setTimeout( () =>
+              setMessage(null)
+            ,5000)
+            setPersons(persons.map(item => item.id===person.id? updatedPerson: item))
+          })
       }
     } else {
       const newPerson = {
@@ -42,6 +50,10 @@ const App = () => {
             )
           setPersons(newPersons)
           setNewName('')
+          setMessage('Person added')
+          setTimeout( () =>
+              setMessage(null)
+            ,5000)
       })
     }
   }
@@ -59,6 +71,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter value={filter} onChange={(event) => setFilter(event.target.value)} />
       <form onSubmit={onNameSubmit}>
         <div>
