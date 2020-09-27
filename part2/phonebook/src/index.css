@@ -9,3 +9,15 @@
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.errornotification {
+  color: red;
+  border: darkred;
+  border-radius: 5px;
+  font-size: 30px;
+  background: lightgray;
+  border-color: darkred;
+  border-style: solid;
+  padding: 10px;
+  margin-bottom: 10px;
+}

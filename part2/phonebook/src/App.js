@@ -4,6 +4,7 @@ import Persons from './components/Persons'
 import personsService from './services/persons'
 import './index.css'
 import Notification from './components/Notification'
+import ErrorNotification from './components/ErrorNotification'
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
@@ -11,6 +12,7 @@ const App = () => {
   const [newPhone, setNewPhone] = useState('')
   const [filter, setFilter] = useState('')
   const [message, setMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() =>{
     personsService
@@ -63,7 +65,12 @@ const App = () => {
     const del = window.confirm(`delete that guy?`)
     if(del)
       personsService.deletePerson(person)
-        .then(setPersons(persons.filter(p => p.id !== person.id)))
+        .then(
+          setPersons(persons.filter(p => p.id !== person.id))
+        )
+        .catch( error =>
+          setErrorMessage(`Person ${person.name} had already been deleted`)
+        )
   }
 
   const filteredPersons = persons
@@ -72,6 +79,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Notification message={message} />
+      <ErrorNotification message={errorMessage} />
       <Filter value={filter} onChange={(event) => setFilter(event.target.value)} />
       <form onSubmit={onNameSubmit}>
         <div>
