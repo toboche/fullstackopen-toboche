@@ -42,14 +42,16 @@ const App = () => {
     } else {
       const newPerson = {
         name: newName,
-        phone: newPhone
+        number: newPhone
       }
       personsService.add(
         newPerson
       ).then( newPerson =>{
+        console.log('old persons', persons);
             const newPersons = persons.concat(
               newPerson
             )
+            console.log('new persons', newPersons);
           setPersons(newPersons)
           setNewName('')
           setMessage('Person added')
