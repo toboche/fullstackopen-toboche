@@ -38,6 +38,9 @@ const App = () => {
             ,5000)
             setPersons(persons.map(item => item.id===person.id? updatedPerson: item))
           })
+          .catch(error=>
+            setErrorMessage(error.response.data.error)
+          )
       }
     } else {
       const newPerson = {
@@ -59,6 +62,9 @@ const App = () => {
               setMessage(null)
             ,5000)
       })
+      .catch(error=>
+          setErrorMessage(error.response.data.error)
+        )
     }
   }
 
@@ -75,6 +81,7 @@ const App = () => {
         )
   }
 
+  console.log('persons', persons)
   const filteredPersons = persons
     .filter(person => person.name.includes(filter))
   return (
