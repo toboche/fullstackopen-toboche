@@ -31,7 +31,7 @@ const App = () => {
         const person = persons.find(item => item.name === newName)
         personsService
           .update({...person, phone: newPhone})
-          .then(updatedPerson => {
+          .then(upsdatedPerson => {
             setMessage('Person updated')
             setTimeout( () =>
               setMessage(null)
